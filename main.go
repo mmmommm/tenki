@@ -1,38 +1,17 @@
 package main
 
 import (
-	"fmt"
-	"io/ioutil"
-	"log"
-	"os"
-	"strings"
+	"flag"
+	"github.com/mmmommm/tenki/tenki"
 )
 
-func main()  {
-	//カレントディレクトリ取得
-	dir, err := os.Getwd()
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	fileInfos, err := ioutil.ReadDir(dir)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	if 2 <= len(os.Args) {
-		if os.Args[1] == "-a" {
-			for _, fileInfo := range fileInfos {
-				fmt.Println(fileInfo.Name())
-			}
-			return
-		}
-	}
-
-	for _, fileInfo := range fileInfos {
-		if strings.HasPrefix(fileInfo.Name(), ".") {
-			continue
-		}
-		fmt.Println(fileInfo.Name())
-	}
+func main() {
+	const defaultPrefecture = ""
+	var	prefecture string
+	flag.StringVar(&prefecture, "current", defaultPrefecture, "today's weather where you are")
+	flag.StringVar(&prefecture, "c", defaultPrefecture, "today's weather where you are")
+	flag.StringVar(&prefecture, "next", defaultPrefecture, "tommorow's weather where you are")
+	flag.StringVar(&prefecture, "n", defaultPrefecture, "tomorrow's weather where you are")
+	flag.Parse()
+	tenki.Current(prefecture)
 }
