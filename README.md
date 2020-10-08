@@ -1,4 +1,11 @@
-# my-cli  
+# tenki  
   
-lsコマンドを実装します  
-https://qiita.com/chihiro/items/6e1404c41e1236a9efe1  
+今日の天気と最高気温、最低気温  
+明日の天気と最高気温、最低気温を返すCLIを作成する  
+  
+`tenki init`  
+現在いる都道府県を入力してもらう  
+`tenki -c`  
+今日の情報を返す  
+`tenki -n`  
+明日の情報を返す  
