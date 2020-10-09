@@ -35,9 +35,9 @@ type Wind struct {
 	Speed float64 `json:"speed"`
 }
 
-func Current(prefecture string) {
+func Current(cPrefecture string) {
 	var city string
-	switch prefecture {
+	switch cPrefecture {
 		case "北海道":
 			city = "Hokkaido,jp"
 		case "青森":
