@@ -11,6 +11,7 @@ import (
 
 	round "github.com/mmmommm/tenki/round"
 )
+
 type OpenWeatherMapAPIResponse struct {
 	Main    Main      `json:"main"`
 	Weather []Weather `json:"weather"`
@@ -38,7 +39,7 @@ type Wind struct {
 func Current(cPrefecture string) {
 	var city string
 	city = round.Prefecture(cPrefecture)
-	
+
 	token := os.Getenv("WEATHER_TOKEN")                   // APIトークン
 	endPoint := "https://api.openweathermap.org/data/2.5/weather" // APIのエンドポイント
 
@@ -64,10 +65,11 @@ func Current(cPrefecture string) {
 	if err := json.Unmarshal(bytes, &apiRes); err != nil {
 			panic(err)
 	}
-
+	
+	fmt.Printf("----------------------------------------\n")
 	fmt.Printf("時刻:     %s\n", time.Unix(apiRes.Dt, 0))
 	fmt.Printf("天気:     %s\n", apiRes.Weather[0].Main)
-	fmt.Printf("アイコン: https://openweathermap.org/img/wn/%s@2x.png\n", apiRes.Weather[0].Icon)
+	// fmt.Printf("アイコン: https://openweathermap.org/img/wn/%s@2x.png\n", apiRes.Weather[0].Icon)
 	fmt.Printf("説明:     %s\n", apiRes.Weather[0].Description)
 	fmt.Printf("気温:     %s °C\n", fmt.Sprintf("%.1f", round.Change(apiRes.Main.Temp))) // ケルビンで取得される
 	fmt.Printf("最高気温: %s °C\n", fmt.Sprintf("%.1f", round.Change(apiRes.Main.TempMax)))
