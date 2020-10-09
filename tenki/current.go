@@ -8,11 +8,12 @@ import (
 	"net/url"
 	"os"
 	"time"
+
+	round "github.com/mmmommm/tenki/round"
 )
 type OpenWeatherMapAPIResponse struct {
 	Main    Main      `json:"main"`
 	Weather []Weather `json:"weather"`
-	Coord   Coord     `json:"coord"`
 	Wind    Wind      `json:"wind"`
 	Dt      int64     `json:"dt"`
 }
@@ -24,12 +25,6 @@ type Main struct {
 	Pressuer int     `json:"pressure"`
 	Humidity int     `json:"humidity"`
 }
-
-type Coord struct {
-	Lon float64 `json:"lon"`
-	Lat float64 `json:"lat"`
-}
-
 type Weather struct {
 	Main        string `json:"main"`
 	Description string `json:"description"`
@@ -38,7 +33,6 @@ type Weather struct {
 
 type Wind struct {
 	Speed float64 `json:"speed"`
-	Deg   int     `json:"deg"`
 }
 
 func Current(prefecture string) {
@@ -139,14 +133,12 @@ func Current(prefecture string) {
 	}
 
 	token := os.Getenv("WEATHER_TOKEN")                   // APIトークン
-	// city := "Tokyo,jp"                                            // 東京を指定
 	endPoint := "https://api.openweathermap.org/data/2.5/weather" // APIのエンドポイント
 
 	// パラメータを設定
 	values := url.Values{}
 	values.Set("q", city)
 	values.Set("APPID", token)
-
 	// リクエストを投げる
 	res, err := http.Get(endPoint + "?" + values.Encode())
 	if err != nil {
@@ -159,7 +151,6 @@ func Current(prefecture string) {
 	if err != nil {
 			panic(err)
 	}
-	fmt.Println(string(bytes))
 
 	// JSONパース
 	var apiRes OpenWeatherMapAPIResponse
@@ -171,13 +162,10 @@ func Current(prefecture string) {
 	fmt.Printf("天気:     %s\n", apiRes.Weather[0].Main)
 	fmt.Printf("アイコン: https://openweathermap.org/img/wn/%s@2x.png\n", apiRes.Weather[0].Icon)
 	fmt.Printf("説明:     %s\n", apiRes.Weather[0].Description)
-	fmt.Printf("緯度:     %f\n", apiRes.Coord.Lat)
-	fmt.Printf("経度:     %f\n", apiRes.Coord.Lon)
-	fmt.Printf("気温:     %f\n", apiRes.Main.Temp) // ケルビンで取得される
-	fmt.Printf("最高気温: %f\n", apiRes.Main.TempMax)
-	fmt.Printf("最低気温: %f\n", apiRes.Main.TempMin)
-	fmt.Printf("気圧:     %d\n", apiRes.Main.Pressuer)
-	fmt.Printf("湿度:     %d\n", apiRes.Main.Humidity)
-	fmt.Printf("風速:     %f\n", apiRes.Wind.Speed)
-	fmt.Printf("風向き:   %d\n", apiRes.Wind.Deg)
+	fmt.Printf("気温:     %s °C\n", fmt.Sprintf("%.1f", round.Change(apiRes.Main.Temp))) // ケルビンで取得される
+	fmt.Printf("最高気温: %s °C\n", fmt.Sprintf("%.1f", round.Change(apiRes.Main.TempMax)))
+	fmt.Printf("最低気温: %s °C\n", fmt.Sprintf("%.1f", round.Change(apiRes.Main.TempMin)))
+	fmt.Printf("気圧:     %d hPa\n", apiRes.Main.Pressuer)
+	fmt.Printf("湿度:     %d ％\n", apiRes.Main.Humidity)
+	fmt.Printf("風速:     %s m/s\n", fmt.Sprintf("%.1f", apiRes.Wind.Speed))
 }
