@@ -8,6 +8,12 @@ import (
 	"github.com/mmmommm/tenki/tenki"
 )
 
+var (
+	Version  = "unset"
+	Revision = "unset"
+)
+
+
 func main() {
 	const defaultPrefecture = ""
 	var	cPrefecture, nPrefecture string
