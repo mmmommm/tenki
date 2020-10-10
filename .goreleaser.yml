@@ -1,0 +1,14 @@
+# コンパイルの設定
+builds:
+# 対象ファイル
+- main: main.go
+# バイナリの名前
+  binary: tenki
+  # どのOSようにコンパイルするか
+  goos:
+  - windows
+  - darwin
+  - linux
+  # どのアーキテクチャ用にコンパイルするか
+  goarch:
+  - amd64
