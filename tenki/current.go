@@ -7,8 +7,10 @@ import (
 	"net/url"
 	"os"
 	"time"
+	"log"
 
 	round "github.com/mmmommm/tenki/round"
+	"github.com/joho/godotenv"
 )
 
 type OpenWeatherMapAPIResponse struct {
@@ -33,6 +35,11 @@ type Wind struct {
 	Speed float64 `json:"speed"`
 }
 func Current(cPrefecture string) {
+	err := godotenv.Load()
+  if err != nil {
+    log.Fatal("Error loading .env file")
+	}
+	
 	var city string
 	city = round.Prefecture(cPrefecture)
 	
