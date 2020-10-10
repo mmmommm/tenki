@@ -10,5 +10,4 @@ pkg
 
 .glide/
 vendor/
-tenki
 dist/
