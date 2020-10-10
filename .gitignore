@@ -1,0 +1,14 @@
+*.exe
+*.test
+*.prof
+.env
+out
+pkg
+.DS_Store
+.idea/
+.vscode/
+
+.glide/
+vendor/
+tenki
+dist/
