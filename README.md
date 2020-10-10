@@ -7,7 +7,9 @@
   
 ## Install  
   
-`go get github.com/mmmommm/tenki`  
+`brew tap mmmommm/tenki`  
+or  
+`brew install tenki`  
   
 ## Usage  
   
