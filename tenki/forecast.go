@@ -14,37 +14,37 @@ import (
 	"github.com/joho/godotenv"
 )
 
-type OpenWeatherMapForecastAPILists struct {
-	List []Next `json:"list"`
+type OpenWeatherMapAPILists struct {
+	List []Forecast `json:"list"`
 }
 
-type Next struct {
-	Main    nMain      `json:"main"`
-	Weather []nWeather `json:"weather"`
-	Wind    nWind      `json:"wind"`
+type Forecast struct {
+	Main    fMain      `json:"main"`
+	Weather []fWeather `json:"weather"`
+	Wind    fWind      `json:"wind"`
 	Dt      int64      `json:"dt"`
 	DtText  string `json:"dt_txt"`
 }
 
-type nMain struct {
+type fMain struct {
 	Temp     float64 `json:"temp"`
 	TempMin  float64 `json:"temp_min"`
 	TempMax  float64 `json:"temp_max"`
 	Pressuer int     `json:"pressure"`
 	Humidity int     `json:"humidity"`
 }
-type nWeather struct {
+type fWeather struct {
 	Main        string `json:"main"`
 	Description string `json:"description"`
 	Icon        string `json:"icon"`
 }
 
-type nWind struct {
+type fWind struct {
 	Speed float64 `json:"speed"`
 }
 
-func NextWeather(fPrefecture string) {
-	err := godotenv.Load()
+func ForecastWeather(fPrefecture string) {
+err := godotenv.Load()
   if err != nil {
     log.Fatal("Error loading .env file")
 	}
@@ -73,13 +73,10 @@ func NextWeather(fPrefecture string) {
 	}
 
 	// JSONパース
-	var apiRes OpenWeatherMapForecastAPILists
+	var apiRes OpenWeatherMapAPILists
 	if err := json.Unmarshal(bytes, &apiRes); err != nil {
 			panic(err)
 	}
-
-	//現在時刻を取得する
-
 	times := [...] int{2, 4, 6}
 	for i := range times {
 		fmt.Printf("----------------------------------------\n")
