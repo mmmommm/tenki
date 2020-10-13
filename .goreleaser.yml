@@ -26,3 +26,13 @@ archives:
         format: zip
 release:
   prerelease: auto
+brew:
+  github:
+    owner: mmmommm
+    name: homebrew-tenki
+  homepage: ""
+  commit_author:
+    name: goreleaserbot
+    email: goreleaser@carlosbecker.com
+  install: |
+    bin.install "tenki"
