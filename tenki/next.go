@@ -4,14 +4,14 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"net/url"
 	"os"
 	"time"
-	"log"
 
-	round "github.com/mmmommm/tenki/round"
 	"github.com/joho/godotenv"
+	round "github.com/mmmommm/tenki/round"
 )
 
 type OpenWeatherMapForecastAPILists struct {
@@ -23,7 +23,7 @@ type Next struct {
 	Weather []nWeather `json:"weather"`
 	Wind    nWind      `json:"wind"`
 	Dt      int64      `json:"dt"`
-	DtText  string `json:"dt_txt"`
+	DtText  string     `json:"dt_txt"`
 }
 
 type nMain struct {
@@ -44,21 +44,22 @@ type nWind struct {
 }
 
 var layout = "2006-01-02 15:04:05"
+
 func timeToString(t time.Time) string {
-    str := t.Format(layout)
-    return str
+	str := t.Format(layout)
+	return str
 }
 
 func NextWeather(fPrefecture string) {
 	err := godotenv.Load()
-  if err != nil {
-    log.Fatal("Error loading .env file")
+	if err != nil {
+		log.Fatal("Error loading .env file")
 	}
 
 	var city string
 	city = round.Prefecture(fPrefecture)
 
-	token := os.Getenv("WEATHER_TOKEN")                   // APIトークン
+	token := os.Getenv("WEATHER_TOKEN")                            // APIトークン
 	endPoint := "https://api.openweathermap.org/data/2.5/forecast" // APIのエンドポイント
 
 	// パラメータを設定
@@ -68,26 +69,26 @@ func NextWeather(fPrefecture string) {
 	// リクエストを投げる
 	res, err := http.Get(endPoint + "?" + values.Encode())
 	if err != nil {
-			panic(err)
+		panic(err)
 	}
 	defer res.Body.Close()
 
 	// レスポンスを読み取り
 	bytes, err := ioutil.ReadAll(res.Body)
 	if err != nil {
-			panic(err)
+		panic(err)
 	}
 
 	// JSONパース
 	var apiRes OpenWeatherMapForecastAPILists
 	if err := json.Unmarshal(bytes, &apiRes); err != nil {
-			panic(err)
+		panic(err)
 	}
 
 	//天気予報が欲しい時間の配列を返す
 	forecastMinutes := round.Tommorow()
-	
-	for i:=0; i<16; i++ {
+
+	for i := 0; i < 16; i++ {
 		for _, v := range forecastMinutes {
 			if timeToString(time.Unix(apiRes.List[i].Dt, 0)) == v {
 				fmt.Printf("----------------------------------------\n")

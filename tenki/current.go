@@ -1,16 +1,17 @@
 package tenki
+
 import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"net/url"
 	"os"
 	"time"
-	"log"
 
-	round "github.com/mmmommm/tenki/round"
 	"github.com/joho/godotenv"
+	round "github.com/mmmommm/tenki/round"
 )
 
 type OpenWeatherMapAPIResponse struct {
@@ -34,17 +35,17 @@ type Weather struct {
 type Wind struct {
 	Speed float64 `json:"speed"`
 }
+
 func CurrentWeather(cPrefecture string) {
 	err := godotenv.Load()
-  if err != nil {
-    log.Fatal("Error loading .env file")
+	if err != nil {
+		log.Fatal("Error loading .env file")
 	}
-	
+
 	var city string
 	city = round.Prefecture(cPrefecture)
-	
 
-	token := os.Getenv("WEATHER_TOKEN")                   // APIトークン
+	token := os.Getenv("WEATHER_TOKEN")                           // APIトークン
 	endPoint := "https://api.openweathermap.org/data/2.5/weather" // APIのエンドポイント
 
 	// パラメータを設定
@@ -54,20 +55,19 @@ func CurrentWeather(cPrefecture string) {
 	// リクエストを投げる
 	res, err := http.Get(endPoint + "?" + values.Encode())
 	if err != nil {
-			panic(err)
+		panic(err)
 	}
 	defer res.Body.Close()
 	// レスポンスを読み取り
 	bytes, err := ioutil.ReadAll(res.Body)
 	if err != nil {
-			panic(err)
+		panic(err)
 	}
 	// JSONパース
 	var apiRes OpenWeatherMapAPIResponse
 	if err := json.Unmarshal(bytes, &apiRes); err != nil {
-			panic(err)
+		panic(err)
 	}
-
 
 	fmt.Printf("----------------------------------------\n")
 	fmt.Printf("時刻:     %s\n", time.Unix(apiRes.Dt, 0))

@@ -13,10 +13,9 @@ var (
 	Revision = "unset"
 )
 
-
 func main() {
 	const defaultPrefecture = ""
-	var	cPrefecture, nPrefecture, fPrefecture string
+	var cPrefecture, nPrefecture, fPrefecture string
 	flag.StringVar(&cPrefecture, "current", defaultPrefecture, "--curennt <県名> returns current weather information where you are.")
 	flag.StringVar(&cPrefecture, "c", defaultPrefecture, "-c <県名> returns current weather information where you are.")
 	flag.StringVar(&fPrefecture, "forecast", defaultPrefecture, "--forecast <県名> returns current weather information where you are.")
@@ -27,10 +26,10 @@ func main() {
 	// -cオプションの時の処理を書く
 	if cPrefecture != "" && nPrefecture == "" && nPrefecture == "" {
 		tenki.CurrentWeather(cPrefecture)
-	// -fオプションの時の処理を書く
+		// -fオプションの時の処理を書く
 	} else if cPrefecture == "" && fPrefecture != "" && nPrefecture == "" {
 		tenki.ForecastWeather(fPrefecture)
-	// -nオプションの時の処理を書く
+		// -nオプションの時の処理を書く
 	} else if cPrefecture == "" && fPrefecture == "" && nPrefecture != "" {
 		tenki.NextWeather(nPrefecture)
 	} else {
