@@ -13,12 +13,17 @@ or
   
 ## Usage  
   
-現在の情報を返す  
+現在の情報を返す。  
   
 `tenki -c <県名> or tenki --curent <県名>`  
 > tenki -c tokyo | tenki --curent tokyo  
   
-明日の情報を朝・昼・晩に分けて返す  
+現在から9時間分の天気予報を返す。  
+  
+`tenki -f <県名> or tenki --forecast <県名>`  
+> tenki -f fukuoka | tenki --forecast fukuoka  
+  
+明日の9時、12時、18時、21時の天気予報を返す。  
   
 `tenki -n <県名> or tenki --next <県名>`  
 > tenki -n osaka | tenki --next osaka  
