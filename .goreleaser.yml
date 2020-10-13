@@ -8,29 +8,14 @@ before:
 builds:
   - env:
       - CGO_ENABLED=0
-archive:
-  replacements:
-    darwin: Darwin
-    linux: Linux
-    windows: Windows
-    amd64: x86_64
-checksum:
-  name_template: 'checksums.txt'
-snapshot:
-  name_template: "{{ .Tag }}-next"
-changelog:
-  sort: asc
-  filters:
-    exclude:
-      - '^docs:'
-      - '^test:'
-brew:
-  github:
-    owner: mmmommm
-    name: homebrew-tenki
-  homepage: "https://github.com/mmmommm/tenki"
-  commit_author:
-    name: goreleaserbot
-    email: goreleaser@carlosbecker.com
-  install: |
-    bin.install Dir['tenki']
+brews:
+  -
+    tap:
+      owner: mmmommm
+      name: homebrew-tenki
+    homepage: "https://github.com/mmmommm/tenki"
+    commit_author:
+      name: goreleaserbot
+      email: goreleaser@carlosbecker.com
+    install: |
+      bin.install Dir['tenki']
