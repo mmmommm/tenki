@@ -86,10 +86,8 @@ func NextWeather(fPrefecture string) {
 
 	//天気予報が欲しい時間の配列を返す
 	forecastMinutes := round.Tommorow()
-
-	times := [...] int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15}
-	for i := range times {
-		fmt.Print(timeToString(time.Unix(apiRes.List[i].Dt, 0)))
+	
+	for i:=0; i<16; i++ {
 		for _, v := range forecastMinutes {
 			if timeToString(time.Unix(apiRes.List[i].Dt, 0)) == v {
 				fmt.Printf("----------------------------------------\n")
@@ -101,6 +99,5 @@ func NextWeather(fPrefecture string) {
 				fmt.Printf("風速:     %s m/s\n", fmt.Sprintf("%.1f", apiRes.List[i].Wind.Speed))
 			}
 		}
-		return
 	}
 }
