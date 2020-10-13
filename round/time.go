@@ -1,13 +1,16 @@
 package round
-import(
+
+import (
 	"time"
 )
 
 var layout = "2006-01-02 15:04:05"
+
 func timeToString(t time.Time) string {
-    str := t.Format(layout)
-    return str
+	str := t.Format(layout)
+	return str
 }
+
 var minutesList = [...]string{" 06:00:00", " 12:00:00", " 15:00:00", " 18:00:00"}
 
 //現在時刻を取得して翌日の6時、12時、15時、18時のデータを表示できるようにする
@@ -19,7 +22,7 @@ func Tommorow() []string {
 	picDate := tTomorrow[:10]
 	var forecastMinutes []string
 	for _, v := range minutesList {
-		forecastMinutes = append(forecastMinutes, picDate + v)
+		forecastMinutes = append(forecastMinutes, picDate+v)
 	}
 	return forecastMinutes
 }
