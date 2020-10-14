@@ -8,7 +8,6 @@
 ## Install  
   
 `brew tap mmmommm/tenki`  
-or  
 `brew install tenki`  
   
 ## Usage  
