@@ -68,21 +68,24 @@ func NextWeather(fPrefecture string) {
 	values.Set("APPID", token)
 	// リクエストを投げる
 	res, err := http.Get(endPoint + "?" + values.Encode())
+	if res != nil {
+        defer res.Body.Close()
+    }
 	if err != nil {
-		panic(err)
+		fmt.Println(err)
 	}
 	defer res.Body.Close()
 
 	// レスポンスを読み取り
 	bytes, err := ioutil.ReadAll(res.Body)
 	if err != nil {
-		panic(err)
+		fmt.Println(err)
 	}
 
 	// JSONパース
 	var apiRes OpenWeatherMapForecastAPILists
 	if err := json.Unmarshal(bytes, &apiRes); err != nil {
-		panic(err)
+		println(err)
 	}
 
 	//天気予報が欲しい時間の配列を返す
