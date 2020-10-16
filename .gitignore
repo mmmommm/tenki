@@ -2,6 +2,7 @@
 *.test
 *.prof
 .env
+.envrc
 out
 pkg
 .DS_Store
