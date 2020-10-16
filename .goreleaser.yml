@@ -10,13 +10,12 @@ builds:
       - CGO_ENABLED=0
 checksum:
   name_template: "{{ .ProjectName }}_checksums.txt"
-  algorithm: sha256
-  disable: true
 brews:
   -
     tap:
       owner: mmmommm
       name: homebrew-tenki
+    description: Returns weather forecast in perticular prefecture. 
     homepage: "https://github.com/mmmommm/tenki"
     commit_author:
       name: goreleaserbot
