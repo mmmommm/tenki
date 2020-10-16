@@ -69,8 +69,8 @@ func NextWeather(fPrefecture string) {
 	// リクエストを投げる
 	res, err := http.Get(endPoint + "?" + values.Encode())
 	if res != nil {
-        defer res.Body.Close()
-    }
+		defer res.Body.Close()
+	}
 	if err != nil {
 		fmt.Println(err)
 	}
