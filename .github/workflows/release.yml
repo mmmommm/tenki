@@ -1,10 +1,9 @@
 name: goreleaser
 
 on:
-  pull_request:
   push:
     tags:
-        - '*'
+      - 'v*.*.*'
 
 jobs:
   goreleaser:
@@ -27,4 +26,4 @@ jobs:
           version: latest
           args: release --rm-dist
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
