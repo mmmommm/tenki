@@ -77,9 +77,9 @@ func CurrentWeather(cPrefecture string) {
 	fmt.Printf("----------------------------------------\n")
 	fmt.Printf("時刻:     %s\n", time.Unix(apiRes.Dt, 0))
 	fmt.Printf("天気:     %s\n", apiRes.Weather[0].Main)
-	fmt.Printf("アイコン: https://openweathermap.org/img/wn/%s@2x.png\n", apiRes.Weather[0].Icon)
+	//fmt.Printf("アイコン: https://openweathermap.org/img/wn/%s@2x.png\n", apiRes.Weather[0].Icon)
 	fmt.Printf("詳細:     %s\n", apiRes.Weather[0].Description)
-	fmt.Printf("平均気温:     %s °C\n", fmt.Sprintf("%.1f", round.Change(apiRes.Main.Temp))) // ケルビンで取得される
+	fmt.Printf("平均気温: %s °C\n", fmt.Sprintf("%.1f", round.Change(apiRes.Main.Temp))) // ケルビンで取得される
 	fmt.Printf("最高気温: %s °C\n", fmt.Sprintf("%.1f", round.Change(apiRes.Main.TempMax)))
 	fmt.Printf("最低気温: %s °C\n", fmt.Sprintf("%.1f", round.Change(apiRes.Main.TempMin)))
 	fmt.Printf("気圧:     %d hPa\n", apiRes.Main.Pressuer)
