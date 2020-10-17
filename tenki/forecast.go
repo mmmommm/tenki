@@ -91,8 +91,3 @@ func ForecastWeather(fPrefecture string) {
 		fmt.Printf("風速:     %s m/s\n", fmt.Sprintf("%.1f", apiRes.List[i].Wind.Speed))
 	}
 }
-
-// fmt.Printf("時刻:     %s\n", apiRes.List[0].DtText)
-// fmt.Printf("天気:     %s\n", apiRes.List[0].Weather[0].Main)
-// fmt.Printf("アイコン: https://openweathermap.org/img/wn/%s@2x.png\n", apiRes.List[0].Weather[0].Icon)
-// fmt.Printf("気圧:     %d hPa\n", apiRes.List[0].Main.Pressuer)

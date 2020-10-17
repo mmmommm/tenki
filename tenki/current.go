@@ -72,10 +72,12 @@ func CurrentWeather(cPrefecture string) {
 		fmt.Println(err)
 	}
 
+	aa := round.ASCIIart(apiRes.Weather[0].Icon)
+
 	fmt.Printf("----------------------------------------\n")
 	fmt.Printf("時刻:     %s\n", time.Unix(apiRes.Dt, 0))
 	fmt.Printf("天気:     %s\n", apiRes.Weather[0].Main)
-	// fmt.Printf("アイコン: https://openweathermap.org/img/wn/%s@2x.png\n", apiRes.Weather[0].Icon)
+	fmt.Printf("アイコン: https://openweathermap.org/img/wn/%s@2x.png\n", apiRes.Weather[0].Icon)
 	fmt.Printf("詳細:     %s\n", apiRes.Weather[0].Description)
 	fmt.Printf("平均気温:     %s °C\n", fmt.Sprintf("%.1f", round.Change(apiRes.Main.Temp))) // ケルビンで取得される
 	fmt.Printf("最高気温: %s °C\n", fmt.Sprintf("%.1f", round.Change(apiRes.Main.TempMax)))
@@ -83,5 +85,6 @@ func CurrentWeather(cPrefecture string) {
 	fmt.Printf("気圧:     %d hPa\n", apiRes.Main.Pressuer)
 	fmt.Printf("湿度:     %d ％\n", apiRes.Main.Humidity)
 	fmt.Printf("風速:     %s m/s\n", fmt.Sprintf("%.1f", apiRes.Wind.Speed))
+	fmt.Printf("%s\n", aa)
 	fmt.Printf("----------------------------------------\n")
 }
