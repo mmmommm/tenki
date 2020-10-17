@@ -82,6 +82,7 @@ func ForecastWeather(fPrefecture string) {
 	}
 	times := [...]int{2, 4, 6}
 	for i := range times {
+		aa := round.ASCIIart(apiRes.List[i].Weather[0].Icon)
 		fmt.Printf("----------------------------------------\n")
 		fmt.Printf("時刻:     %s\n", time.Unix(apiRes.List[i].Dt, 0))
 		fmt.Printf("天気:     %s\n", apiRes.List[i].Weather[0].Description)
@@ -89,5 +90,6 @@ func ForecastWeather(fPrefecture string) {
 		fmt.Printf("最低気温: %s °C\n", fmt.Sprintf("%.1f", round.Change(apiRes.List[i].Main.TempMin)))
 		fmt.Printf("湿度:     %d ％\n", apiRes.List[i].Main.Humidity)
 		fmt.Printf("風速:     %s m/s\n", fmt.Sprintf("%.1f", apiRes.List[i].Wind.Speed))
+		fmt.Printf("%s\n", aa)
 	}
 }
