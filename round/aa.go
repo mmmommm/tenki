@@ -1,11 +1,12 @@
 package round
+
 import (
+	"fmt"
 	"io/ioutil"
 	"os"
-	"fmt"
 )
 
-func readfile (url string) string {
+func readfile(url string) string {
 	file, err := os.Open(url)
 	if err != nil {
 		fmt.Println(os.Stderr, err)
