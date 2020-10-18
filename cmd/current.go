@@ -10,7 +10,8 @@ import (
 	"os"
 	"time"
 
-	"github.com/joho/godotenv"
+	"github.com/kelseyhightower/envconfig"
+	// "github.com/joho/godotenv"
 	sub "github.com/mmmommm/tenki/sub"
 )
 
@@ -35,15 +36,24 @@ type Weather struct {
 type Wind struct {
 	Speed float64 `json:"speed"`
 }
+type Env struct {
+	Token string `required:"true"`
+}
 
 func CurrentWeather(cPrefecture string) {
-	err := godotenv.Load()
+	var goenv Env
+	err := envconfig.Process("weather", &goenv)
 	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
+    log.Fatal(err.Error())
+  }
+
+	// err := godotenv.Load()
+	// if err != nil {
+	// 	log.Fatal("Error loading .env file")
+	// }
 
 	var city string
-	city = round.Prefecture(cPrefecture)
+	city = sub.Prefecture(cPrefecture)
 
 	token := os.Getenv("WEATHER_TOKEN")                           // APIトークン
 	endPoint := "https://api.openweathermap.org/data/2.5/weather" // APIのエンドポイント
