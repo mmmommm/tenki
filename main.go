@@ -3,14 +3,22 @@ package main
 import (
 	"flag"
 	"fmt"
+	"log"
 	"os"
 
+	"github.com/joho/godotenv"
 	"github.com/mmmommm/tenki/cmd"
 )
 
 var version = "1.0.0"
 
 func main() {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+	env := os.Getenv("WEATHER_TOKEN")
+
 	const defaultPrefecture = ""
 	var cPrefecture, nPrefecture, fPrefecture string
 	var showVersion bool
@@ -26,13 +34,13 @@ func main() {
 
 	// -cオプションの時の処理を書く
 	if cPrefecture != "" && fPrefecture == "" && nPrefecture == "" {
-		cmd.CurrentWeather(cPrefecture)
+		cmd.CurrentWeather(cPrefecture, env)
 		// -fオプションの時の処理を書く
 	} else if cPrefecture == "" && fPrefecture != "" && nPrefecture == "" {
-		cmd.ForecastWeather(fPrefecture)
+		cmd.ForecastWeather(fPrefecture, env)
 		// -nオプションの時の処理を書く
 	} else if cPrefecture == "" && fPrefecture == "" && nPrefecture != "" {
-		cmd.NextWeather(nPrefecture)
+		cmd.NextWeather(nPrefecture, env)
 	} else if showVersion {
 		fmt.Println("version:", version)
 		return
