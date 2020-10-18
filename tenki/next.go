@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"net/url"
 	"os"
@@ -51,10 +50,17 @@ func timeToString(t time.Time) string {
 }
 
 func NextWeather(fPrefecture string) {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
+	env := os.Getenv("WEATHER_TOKEN")
+	if "" == env {
+		env = "development"
 	}
+
+	godotenv.Load(".env." + env + ".local")
+	if "test" != env {
+		godotenv.Load(".env.local")
+	}
+	godotenv.Load(".env." + env)
+	godotenv.Load()
 
 	var city string
 	city = round.Prefecture(fPrefecture)
