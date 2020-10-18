@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/mmmommm/tenki/tenki"
+	"github.com/mmmommm/tenki/cmd"
 )
 
 var version = "1.0.0"
@@ -26,13 +26,13 @@ func main() {
 
 	// -cオプションの時の処理を書く
 	if cPrefecture != "" && fPrefecture == "" && nPrefecture == "" {
-		tenki.CurrentWeather(cPrefecture)
+		cmd.CurrentWeather(cPrefecture)
 		// -fオプションの時の処理を書く
 	} else if cPrefecture == "" && fPrefecture != "" && nPrefecture == "" {
-		tenki.ForecastWeather(fPrefecture)
+		cmd.ForecastWeather(fPrefecture)
 		// -nオプションの時の処理を書く
 	} else if cPrefecture == "" && fPrefecture == "" && nPrefecture != "" {
-		tenki.NextWeather(nPrefecture)
+		cmd.NextWeather(nPrefecture)
 	} else if showVersion {
 		fmt.Println("version:", version)
 		return
