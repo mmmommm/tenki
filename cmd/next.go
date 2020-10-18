@@ -55,8 +55,8 @@ func NextWeather(fPrefecture string) {
 	var goenv Env
 	err := envconfig.Process("weather", &goenv)
 	if err != nil {
-    log.Fatal(err.Error())
-  }
+		log.Fatal(err.Error())
+	}
 
 	// err := godotenv.Load()
 	// if err != nil {
