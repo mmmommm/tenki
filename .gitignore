@@ -2,6 +2,7 @@
 *.test
 *.prof
 .env
+cmd/.env
 out
 pkg
 .DS_Store
@@ -12,3 +13,4 @@ pkg
 .glide/
 vendor/
 dist/
+tenki
