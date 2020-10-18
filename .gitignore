@@ -1,7 +1,7 @@
 *.exe
 *.test
 *.prof
-.env.*
+.env
 out
 pkg
 .DS_Store
