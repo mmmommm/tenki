@@ -1,16 +1,18 @@
-package tenki
+package cmd
 
 import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"net/url"
 	"os"
 	"time"
 
-	"github.com/joho/godotenv"
-	round "github.com/mmmommm/tenki/round"
+	"github.com/kelseyhightower/envconfig"
+	// "github.com/joho/godotenv"
+	sub "github.com/mmmommm/tenki/sub"
 )
 
 type OpenWeatherMapAPIResponse struct {
@@ -34,22 +36,24 @@ type Weather struct {
 type Wind struct {
 	Speed float64 `json:"speed"`
 }
+type Env struct {
+	Token string `required:"true"`
+}
 
 func CurrentWeather(cPrefecture string) {
-	env := os.Getenv("WEATHER_TOKEN")
-	if "" == env {
-		env = "development"
+	var goenv Env
+	err := envconfig.Process("weather", &goenv)
+	if err != nil {
+		log.Fatal(err.Error())
 	}
 
-	godotenv.Load(".env." + env + ".local")
-	if "test" != env {
-		godotenv.Load(".env.local")
-	}
-	godotenv.Load(".env." + env)
-	godotenv.Load()
+	// err := godotenv.Load()
+	// if err != nil {
+	// 	log.Fatal("Error loading .env file")
+	// }
 
 	var city string
-	city = round.Prefecture(cPrefecture)
+	city = sub.Prefecture(cPrefecture)
 
 	token := os.Getenv("WEATHER_TOKEN")                           // APIトークン
 	endPoint := "https://api.openweathermap.org/data/2.5/weather" // APIのエンドポイント
@@ -78,15 +82,15 @@ func CurrentWeather(cPrefecture string) {
 		fmt.Println(err)
 	}
 
-	aa := round.ASCIIart(apiRes.Weather[0].Icon)
+	aa := sub.ASCIIart(apiRes.Weather[0].Icon)
 
 	fmt.Printf("----------------------------------------\n")
 	fmt.Printf("時刻:     %s\n", time.Unix(apiRes.Dt, 0))
 	fmt.Printf("天気:     %s\n", apiRes.Weather[0].Main)
 	fmt.Printf("詳細:     %s\n", apiRes.Weather[0].Description)
-	fmt.Printf("平均気温: %s °C\n", fmt.Sprintf("%.1f", round.Change(apiRes.Main.Temp))) // ケルビンで取得される
-	fmt.Printf("最高気温: %s °C\n", fmt.Sprintf("%.1f", round.Change(apiRes.Main.TempMax)))
-	fmt.Printf("最低気温: %s °C\n", fmt.Sprintf("%.1f", round.Change(apiRes.Main.TempMin)))
+	fmt.Printf("平均気温: %s °C\n", fmt.Sprintf("%.1f", sub.Change(apiRes.Main.Temp))) // ケルビンで取得される
+	fmt.Printf("最高気温: %s °C\n", fmt.Sprintf("%.1f", sub.Change(apiRes.Main.TempMax)))
+	fmt.Printf("最低気温: %s °C\n", fmt.Sprintf("%.1f", sub.Change(apiRes.Main.TempMin)))
 	fmt.Printf("気圧:     %d hPa\n", apiRes.Main.Pressuer)
 	fmt.Printf("湿度:     %d ％\n", apiRes.Main.Humidity)
 	fmt.Printf("風速:     %s m/s\n", fmt.Sprintf("%.1f", apiRes.Wind.Speed))

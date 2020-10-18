@@ -1,16 +1,18 @@
-package tenki
+package cmd
 
 import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"net/url"
 	"os"
 	"time"
 
-	"github.com/joho/godotenv"
-	round "github.com/mmmommm/tenki/round"
+	"github.com/kelseyhightower/envconfig"
+	// "github.com/joho/godotenv"
+	sub "github.com/mmmommm/tenki/sub"
 )
 
 type OpenWeatherMapForecastAPILists struct {
@@ -50,20 +52,19 @@ func timeToString(t time.Time) string {
 }
 
 func NextWeather(fPrefecture string) {
-	env := os.Getenv("WEATHER_TOKEN")
-	if "" == env {
-		env = "development"
+	var goenv Env
+	err := envconfig.Process("weather", &goenv)
+	if err != nil {
+		log.Fatal(err.Error())
 	}
 
-	godotenv.Load(".env." + env + ".local")
-	if "test" != env {
-		godotenv.Load(".env.local")
-	}
-	godotenv.Load(".env." + env)
-	godotenv.Load()
+	// err := godotenv.Load()
+	// if err != nil {
+	// 	log.Fatal("Error loading .env file")
+	// }
 
 	var city string
-	city = round.Prefecture(fPrefecture)
+	city = sub.Prefecture(fPrefecture)
 
 	token := os.Getenv("WEATHER_TOKEN")                            // APIトークン
 	endPoint := "https://api.openweathermap.org/data/2.5/forecast" // APIのエンドポイント
@@ -95,17 +96,17 @@ func NextWeather(fPrefecture string) {
 	}
 
 	//天気予報が欲しい時間の配列を返す
-	forecastMinutes := round.Tommorow()
+	forecastMinutes := sub.Tommorow()
 
 	for i := 0; i < 16; i++ {
 		for _, v := range forecastMinutes {
 			if timeToString(time.Unix(apiRes.List[i].Dt, 0)) == v {
-				aa := round.ASCIIart(apiRes.List[i].Weather[0].Icon)
+				aa := sub.ASCIIart(apiRes.List[i].Weather[0].Icon)
 				fmt.Printf("----------------------------------------\n")
 				fmt.Printf("時刻:     %s\n", time.Unix(apiRes.List[i].Dt, 0))
 				fmt.Printf("天気:     %s\n", apiRes.List[i].Weather[0].Description)
-				fmt.Printf("最高気温: %s °C\n", fmt.Sprintf("%.1f", round.Change(apiRes.List[i].Main.TempMax)))
-				fmt.Printf("最低気温: %s °C\n", fmt.Sprintf("%.1f", round.Change(apiRes.List[i].Main.TempMin)))
+				fmt.Printf("最高気温: %s °C\n", fmt.Sprintf("%.1f", sub.Change(apiRes.List[i].Main.TempMax)))
+				fmt.Printf("最低気温: %s °C\n", fmt.Sprintf("%.1f", sub.Change(apiRes.List[i].Main.TempMin)))
 				fmt.Printf("湿度:     %d ％\n", apiRes.List[i].Main.Humidity)
 				fmt.Printf("風速:     %s m/s\n", fmt.Sprintf("%.1f", apiRes.List[i].Wind.Speed))
 				fmt.Printf("%s\n", aa)
