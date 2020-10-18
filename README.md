@@ -9,6 +9,8 @@
   
 ## Install  
   
+`go get github.com/mmmommm/tenki`
+  
 `brew tap mmmommm/tenki`  
 `brew install mmmommm/tenki/tenki`  
   
