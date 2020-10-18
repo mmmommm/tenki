@@ -12,6 +12,10 @@
 `brew tap mmmommm/tenki`  
 `brew install mmmommm/tenki/tenki`  
   
+## Upgrade  
+  
+`brew upgrade mmmommm/tenki/tenki`
+
 ## Usage  
   
 現在の情報を返す。  
@@ -35,4 +39,4 @@
   
 ![-nコマンド](https://user-images.githubusercontent.com/51479834/96334005-6fbadf00-10a8-11eb-81aa-047497612185.png)
   
-[県名一覧](./prefecture.md)
+[県名一覧](./doc/prefecture.md)
