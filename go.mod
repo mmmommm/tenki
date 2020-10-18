@@ -5,7 +5,6 @@ go 1.14
 require (
 	github.com/ichinaski/pxl v0.0.0-20170812084744-4206eb59e8eb // indirect
 	github.com/joho/godotenv v1.3.0
-	github.com/k-motoyan/envenb v0.0.0-20181128144113-56d3b7780ec2 // indirect
 	github.com/kelseyhightower/envconfig v1.4.0
 	github.com/mattn/go-runewidth v0.0.9 // indirect
 	github.com/nsf/termbox-go v0.0.0-20200418040025-38ba6e5628f1 // indirect
