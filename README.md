@@ -5,11 +5,12 @@
 現在の天気と気温などの気象情報  
 現在からの三時間ごとの天気予報  
 明日の天気と気温などの気象情報を返すCLIです。  
+![zennに記事を書きました](https://zenn.dev/mmomm/articles/8ae770c54821d1b8f287)
   
 ## Install  
   
 `brew tap mmmommm/tenki`  
-`brew install tenki`  
+`brew install mmmommm/tenki/tenki`  
   
 ## Usage  
   
