@@ -4,14 +4,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"net/url"
-	"os"
 	"time"
 
-	"github.com/kelseyhightower/envconfig"
-	// "github.com/joho/godotenv"
 	sub "github.com/mmmommm/tenki/sub"
 )
 
@@ -43,22 +39,11 @@ type fWind struct {
 	Speed float64 `json:"speed"`
 }
 
-func ForecastWeather(fPrefecture string) {
-	var goenv Env
-	err := envconfig.Process("weather", &goenv)
-	if err != nil {
-		log.Fatal(err.Error())
-	}
-
-	// err := godotenv.Load()
-	// if err != nil {
-	// 	log.Fatal("Error loading .env file")
-	// }
-
+func ForecastWeather(fPrefecture, env string) {
 	var city string
 	city = sub.Prefecture(fPrefecture)
 
-	token := os.Getenv("WEATHER_TOKEN")                            // APIトークン
+	token := env                                                   // APIトークン
 	endPoint := "https://api.openweathermap.org/data/2.5/forecast" // APIのエンドポイント
 
 	// パラメータを設定
