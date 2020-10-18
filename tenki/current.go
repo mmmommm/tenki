@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"net/url"
 	"os"
@@ -37,10 +36,17 @@ type Wind struct {
 }
 
 func CurrentWeather(cPrefecture string) {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
+	env := os.Getenv("WEATHER_TOKEN")
+	if "" == env {
+		env = "development"
 	}
+
+	godotenv.Load(".env." + env + ".local")
+	if "test" != env {
+		godotenv.Load(".env.local")
+	}
+	godotenv.Load(".env." + env)
+	godotenv.Load()
 
 	var city string
 	city = round.Prefecture(cPrefecture)
@@ -77,7 +83,6 @@ func CurrentWeather(cPrefecture string) {
 	fmt.Printf("----------------------------------------\n")
 	fmt.Printf("時刻:     %s\n", time.Unix(apiRes.Dt, 0))
 	fmt.Printf("天気:     %s\n", apiRes.Weather[0].Main)
-	//fmt.Printf("アイコン: https://openweathermap.org/img/wn/%s@2x.png\n", apiRes.Weather[0].Icon)
 	fmt.Printf("詳細:     %s\n", apiRes.Weather[0].Description)
 	fmt.Printf("平均気温: %s °C\n", fmt.Sprintf("%.1f", round.Change(apiRes.Main.Temp))) // ケルビンで取得される
 	fmt.Printf("最高気温: %s °C\n", fmt.Sprintf("%.1f", round.Change(apiRes.Main.TempMax)))
