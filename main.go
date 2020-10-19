@@ -12,12 +12,16 @@ import (
 
 var version = "1.0.0"
 
-func main() {
-	err := godotenv.Load(fmt.Sprintf("./%s.env", os.Getenv("GO_ENV")))
+func getenv(key string) string {
+	err := godotenv.Load()
 	if err != nil {
-		log.Fatal("Error loading .env file")
+		log.Fatalf("Error loading .env file")
 	}
-	env := os.Getenv("WEATHER_TOKEN")
+	return os.Getenv(key)
+}
+
+func main() {
+	env := getenv("WEATHER_TOKEN")
 
 	const defaultPrefecture = ""
 	var cPrefecture, nPrefecture, fPrefecture string
