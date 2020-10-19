@@ -13,7 +13,7 @@ import (
 var version = "1.0.0"
 
 func main() {
-	err := godotenv.Load()
+	err := godotenv.Load(fmt.Sprintf("./%s.env", os.Getenv("GO_ENV")))
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
