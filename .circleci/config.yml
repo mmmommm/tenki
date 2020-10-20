@@ -11,8 +11,11 @@ workflows:
               only: /v[0-9]+(\.[0-9]+)*(-.*)*/
 jobs:
   release:
+    working_directory: ~/tenki
     docker:
       - image: circleci/golang:1.15
     steps:
       - checkout
+      - run: ls -la .env
+      - run: cp .env .env
       - run: curl -sL https://git.io/goreleaser | bash
