@@ -16,6 +16,5 @@ jobs:
       - image: circleci/golang:1.15
     steps:
       - checkout
-      - run: ls -la .env
-      - run: cp .env .env
+      - run: cat .env >> ${WEATHER_TOKEN}
       - run: curl -sL https://git.io/goreleaser | bash
