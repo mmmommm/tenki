@@ -21,6 +21,8 @@ jobs:
           command: |
             touch .env
             echo ${WEATHER_TOKEN} > .env
+            ls -a .env
+            cat .env
       - run:
           name: goreleaser動かす
           command: |
