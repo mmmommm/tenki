@@ -86,15 +86,16 @@ func NextWeather(fPrefecture, env string) {
 	for i := 0; i < 16; i++ {
 		for _, v := range forecastMinutes {
 			if timeToString(time.Unix(apiRes.List[i].Dt, 0)) == v {
-				aa := sub.ASCIIart(apiRes.List[i].Weather[0].Icon)
+				// aa := sub.ASCIIart(apiRes.List[i].Weather[0].Icon)
+				emoji := sub.GetEmoji(apiRes.List[i].Weather[0].Icon)
 				fmt.Printf("----------------------------------------\n")
 				fmt.Printf("時刻:     %s\n", time.Unix(apiRes.List[i].Dt, 0))
-				fmt.Printf("天気:     %s\n", apiRes.List[i].Weather[0].Description)
+				fmt.Printf("天気:     %s   %s\n", emoji, apiRes.List[i].Weather[0].Main)
 				fmt.Printf("最高気温: %s °C\n", fmt.Sprintf("%.1f", sub.Change(apiRes.List[i].Main.TempMax)))
 				fmt.Printf("最低気温: %s °C\n", fmt.Sprintf("%.1f", sub.Change(apiRes.List[i].Main.TempMin)))
 				fmt.Printf("湿度:     %d ％\n", apiRes.List[i].Main.Humidity)
 				fmt.Printf("風速:     %s m/s\n", fmt.Sprintf("%.1f", apiRes.List[i].Wind.Speed))
-				fmt.Printf("%s\n", aa)
+				// fmt.Printf("%s\n", aa)
 			}
 		}
 	}
