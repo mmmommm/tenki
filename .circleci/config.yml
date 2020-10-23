@@ -15,13 +15,13 @@ jobs:
     docker:
       - image: circleci/golang:1.15
     steps:
-      - checkout
       - run:
           name: env書き出す
           command: |
             touch .env
             echo 'WEATHER_TOKEN='${WEATHER_TOKEN} > .env
             cat .env
+      - checkout
       - run:
           name: goreleaser動かす
           command: |
