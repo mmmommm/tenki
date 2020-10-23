@@ -4,4 +4,4 @@ test:
 lint:
 		gofmt -w ./...
 build:
-		cp ./dev.env .env
+		cp ../dev.env ../.env
