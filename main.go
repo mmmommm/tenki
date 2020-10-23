@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"log"
 	"os"
 
 	"github.com/joho/godotenv"
@@ -11,16 +12,21 @@ import (
 
 var version = "1.0.0"
 
-func getenv(key string) string {
-	err := godotenv.Load(".env.dev")
-	if err != nil {
-		fmt.Println("Error loading .env file")
-	}
-	return os.Getenv(key)
-}
+// func getenv(key string) string {
+// 	err := godotenv.Load()
+// 	if err != nil {
+// 		fmt.Println("Error loading .env file")
+// 	}
+// 	return os.Getenv(key)
+// }
 
 func main() {
-	env := getenv("WEATHER_TOKEN")
+	err := godotenv.Load(fmt.Sprintf("%s.env", os.Getenv("GO_ENV")))
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
+	env := os.Getenv("WEATHER_TOKEN")
 
 	const defaultPrefecture = ""
 	var cPrefecture, nPrefecture, fPrefecture string
