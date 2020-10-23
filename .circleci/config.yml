@@ -17,10 +17,6 @@ jobs:
     steps:
       - checkout
       - run:
-          name: env作成
-          command: |
-            make build
-      - run:
           name: goreleaser動かす
           command: |
             curl -sL https://git.io/goreleaser | bash
