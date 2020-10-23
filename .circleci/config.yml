@@ -17,12 +17,10 @@ jobs:
     steps:
       - checkout
       - run:
+          name: env作成
+          command: |
+            make build
+      - run:
           name: goreleaser動かす
           command: |
             curl -sL https://git.io/goreleaser | bash
-      - run:
-          name: env書き出す
-          command: |
-            touch .env
-            echo 'WEATHER_TOKEN='${WEATHER_TOKEN} > .env
-            cat .env
