@@ -20,8 +20,7 @@ jobs:
           name: env書き出す
           command: |
             touch .env
-            echo ${WEATHER_TOKEN} > .env
-            ls -a .env
+            echo 'WEATHER_TOKEN='${WEATHER_TOKEN} > .env
             cat .env
       - run:
           name: goreleaser動かす
